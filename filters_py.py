@@ -1,7 +1,8 @@
-#python3 filters_py.py
+#python filters_py.py
 import cv2 as cv
 import numpy as np
 import ctypes
+import math
 
 #CONVERSION A ARRAY DE PANTALLA NOKIA LCD
 def NokiaLCD_array(img_mono, img_arr):
@@ -17,36 +18,40 @@ def NokiaLCD_array(img_mono, img_arr):
 
 #FILTRO SOBEL
 def Sobel_py(img,img_mono,img_arr):
-    #Gradient-X
-    grad_x = cv.Sobel(img, ddepth=cv.CV_16S, dx=1, dy=0, ksize=3, borderType=cv.BORDER_DEFAULT)
-    # Gradient-Y
-    grad_y = cv.Sobel(img, ddepth=cv.CV_16S, dx=0, dy=1, ksize=3, borderType=cv.BORDER_DEFAULT)
-    #Converting to 8bits unsigned |ABS|
-    abs_grad_x = cv.convertScaleAbs(grad_x)
-    abs_grad_y = cv.convertScaleAbs(grad_y)
-    #Gxy=sqrt(Gx^2+Gy^2)
-    img = cv.addWeighted(abs_grad_x, 0.5, abs_grad_y, 0.5, 0)
+    sobelx = [1.0, 0.0, -1.0, 2.0, 0.0, -2.0, 1.0, 0.0, -1.0]
+    sobely = [1.0, 2.0, 1.0, 0.0, 0.0, 0.0, -1.0, -2.0, -1.0]
+    media = 0.0
+    sobel_filtered_image = np.zeros(shape=np.shape(img))
 
-    #Umbral: probar con y sin umbral
-    umbral=0.0
-    for i in range(48):
-        for j in range(84):
-            umbral=umbral+img[i][j]
-    umbral=umbral/(84*48)
+    for i in range(1, 47): #Alto
+        for j in range(1, 83): #Ancho
+            #Calculate gx and gy using Sobel (horizontal and vertical gradients)
+            index, gx, gy = 0, 0.0, 0.0
+            for m in range(i-1, i+2):
+                for n in range(j-1, j+2):
+                    gx+=sobelx[index]*img[m][n]
+                    gy+=sobely[index]*img[m][n]
+                    index+=1
+
+            g= math.sqrt(gx ** 2 + gy ** 2)
+            sobel_filtered_image[i-1][j-1] = g
+            media = media+sobel_filtered_image[i - 1, j - 1]
+    
+    media = media/(82*46)
 
     #Thresholding de la imagen a blanco o negro
     for i in range(0, 48): #Alto
         for j in range(0, 84): #Ancho
-            if img[i][j] < umbral:    #Si el pixel es menor al umbral, se guarda 0 en el arreglo dado que es de fondo (pixel no prendido en pantalla)
+            if sobel_filtered_image[i][j] < media:    #Si el pixel es menor al umbral, se guarda 0 en el arreglo dado que es de fondo (pixel no prendido en pantalla)
                 img_mono[i][j]=0
-                img[i][j]=255
+                sobel_filtered_image[i][j]=255
             else:   
-                img[i][j]=0
+                sobel_filtered_image[i][j]=0
     
     #Array para NokiaLCD
     img_arr=NokiaLCD_array(img_mono, img_arr)
 
-    return img, img_arr
+    return sobel_filtered_image, img_arr
 
 #FILTRO UMBRAL INTENSIDAD GLOBAL
 def Int_thresh_py(img,img_mono,img_arr):
@@ -79,7 +84,7 @@ def grayscale(img):
     gray = np.zeros((48, 84),dtype='uint8')
     for i in range (len(img)):
         for j in range(len(img[0])):
-            # https://www.kdnuggets.com/2019/12/convert-rgb-image-grayscale.html
+            # Gray = 0.0722Blue + 0.7152Green + 0.2126Red
             gray[i][j]=int(0.0722*img[i][j][0]+0.7152*img[i][j][1]+0.2126*img[i][j][2])
     return gray
 
@@ -108,7 +113,7 @@ if __name__ == '__main__':
     Sobel_mono = np.ones((48, 84),dtype='uint8') #Imagen en forma 0 y 1 volteada 
     img_sobel, Sobel_arr = Sobel_py(img_sobel,Sobel_mono,Sobel_arr)
 
-    exportar_arr(Sobel_arr, "Sobel_prueba1.txt")
+    exportar_arr(Sobel_arr, "Sobel_prueba1_py.txt")
 
     #GLOBAL INTENSITY THRESHOLD FILTER
     img_ithresh = grayscale(img)
@@ -118,5 +123,5 @@ if __name__ == '__main__':
 
     exportar_arr(Ithresh_arr, "ITresh_prueba1.txt")
 
-    cv.imwrite('Results/Grayscale.png',img_ithresh)
-    cv.imwrite('Results/Sobel.png',img_sobel)
+    cv.imwrite('Results/Grayscale_py.png',img_ithresh)
+    cv.imwrite('Results/Sobel_pu.png',img_sobel)
