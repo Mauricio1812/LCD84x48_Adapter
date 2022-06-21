@@ -20,7 +20,7 @@ if __name__ == '__main__':
     Sobel_mono = np.ones((48, 84),dtype='uint8') #Imagen en forma 0 y 1 volteada 
     img_sobel, Sobel_arr = fpy.Sobel_py(img_sobel,Sobel_mono,Sobel_arr)
 
-    fpy.exportar_arr(Sobel_arr, "Arreglos/Sobel_prueba1.txt")
+    fpy.exportar_arr(Sobel_arr, "Arrays/Sobel_py.txt")
 
     #GLOBAL INTENSITY THRESHOLD FILTER
     img_ithresh = fpy.grayscale(img)
@@ -28,7 +28,7 @@ if __name__ == '__main__':
     Ithresh_mono = np.ones((48, 84),dtype='uint8') #Imagen en forma 0 y 1 volteada 
     img_ithresh, Ithresh_arr = fpy.Int_thresh_py(img_ithresh,Ithresh_mono,Ithresh_arr)
 
-    fpy.exportar_arr(Ithresh_arr, "Arreglos/ITresh_prueba1.txt")
+    fpy.exportar_arr(Ithresh_arr, "Arrays/ITresh_py.txt")
 
     cv.imwrite('Results/Grayscale.png',img_ithresh)
     cv.imwrite('Results/Sobel.png',img_sobel)
@@ -39,7 +39,7 @@ if __name__ == '__main__':
     Ithresh_monoC1 = np.ones((48, 84),dtype='uint8') #Imagen en forma 0 y 1 volteada     
     lib.Int_thresh_c(imgC1, Ithresh_monoC1,Ithresh_arrC1)
     cv.imwrite('Results/GrayscaleC.png',Ithresh_monoC1)
-    fpy.exportar_arr(Ithresh_arrC1, "Arreglos/ITresh_C.txt")
+    fpy.exportar_arr(Ithresh_arrC1, "Arrays/ITresh_C.txt")
     
 
     #GLOBAL INTENSITY THRESHOLD ASM
@@ -53,7 +53,7 @@ if __name__ == '__main__':
     # Para ver la imgn en blanco y negro cambiar  mono_img_asm:
     #   -En white_pixel -> mov r8, 255
     #   -En black_pixel -> mov r8,0
-    fpy.exportar_arr(Ithresh_arrASM, "Arreglos/ITresh_ASM.txt")
+    fpy.exportar_arr(Ithresh_arrASM, "Arrays/ITresh_ASM.txt")
 
 
     #bash exec.sh
