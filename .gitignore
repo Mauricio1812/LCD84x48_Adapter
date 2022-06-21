@@ -1,3 +1,4 @@
 # Excluyendo archivos .o y .so
 *.o
 *.so
+*.pyc
