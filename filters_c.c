@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-extern void mono_img_asm(unsigned char *img, unsigned char *img_ithresh, double g_red, double g_green, double g_blue);
+extern void mono_img_asm(unsigned char *img, unsigned char *img_ithresh, double weight_b, double weight_g, double weight_r);
 extern void mono_array_asm(unsigned char *img_mono, unsigned char *mono_array);
 
 void Int_thresh_c(unsigned char *img, unsigned char *img_ithresh, unsigned char *img_arr)
@@ -24,9 +24,9 @@ void Int_thresh_c(unsigned char *img, unsigned char *img_ithresh, unsigned char 
         }
     }
 
+    //Calculando umbral para thresholding
     float umbral=0;
     int cont=0;
-
     for(i=0;i<48;i++){
         for(j=0;j<84;j++){
             index=i*84+j;
@@ -38,9 +38,10 @@ void Int_thresh_c(unsigned char *img, unsigned char *img_ithresh, unsigned char 
     }
     umbral=umbral/cont;
 
-
+    //Transformando a monocromática: 
+    //  Index>umbral -> Píxel blanco
+    //  Index<umbral -> Píxel negro
     unsigned char img_mono[48][84];
-
     for(i=0;i<48;i++){
         for(j=0;j<84;j++){
             index=i*84+j;
@@ -53,7 +54,8 @@ void Int_thresh_c(unsigned char *img, unsigned char *img_ithresh, unsigned char 
             }
         }
     }
-    
+
+    //Transformando a arreglo en bytes compatible con pantalla LCD
     int Byte_index=0;
     for(i=0;i<48;i=8+i){
         for(j=0;j<84;j++){

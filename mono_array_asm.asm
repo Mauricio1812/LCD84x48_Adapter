@@ -4,18 +4,16 @@ global mono_array_asm
     section .text 
 
 mono_array_asm:
-;rdi <- *img 
-;rsi <- *output_array
+;rdi <- *img_mono 
+;rsi <- *mono_array
 
-    mov r10,0  ;i=0 
-    mov r11, 0  ;j=0
-    mov r12, 0 ;n=0
+    mov r10,0  
+    mov r11, 0  
     mov r8, 0
     mov r9, 0
     mov r13, 0
     mov r14, 0
     mov r15, 0
-
 
     mov r15, rdi ;img[0][0]
 for_alto48:
@@ -23,11 +21,9 @@ for_alto48:
 
     mov r14, rdi ;copy latest img[i][0]
 for_ancho84:
-    mov r12, 0
-
-for_8bits:
     mov r8, 0
 
+    ;Binary to Decimal - 8bits vertically
     mov r13b, byte [rdi]
     mov r9, r13
     add r8, r9  ;0
