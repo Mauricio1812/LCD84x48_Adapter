@@ -1,7 +1,6 @@
 #python filters_py.py
 import cv2 as cv
 import numpy as np
-import ctypes
 import math
 
 #CONVERSION A ARRAY DE PANTALLA NOKIA LCD
@@ -17,11 +16,10 @@ def NokiaLCD_array(img_mono, img_arr):
     return img_arr
 
 #FILTRO SOBEL
-def Sobel_py(img,img_mono,img_arr):
+def Sobel_py(img,img_mono,img_arr,sobel_filtered_image):
     sobelx = [1.0, 0.0, -1.0, 2.0, 0.0, -2.0, 1.0, 0.0, -1.0]
     sobely = [1.0, 2.0, 1.0, 0.0, 0.0, 0.0, -1.0, -2.0, -1.0]
     media = 0.0
-    sobel_filtered_image = np.zeros(shape=np.shape(img))
 
     for i in range(1, 47): #Alto
         for j in range(1, 83): #Ancho
@@ -34,8 +32,8 @@ def Sobel_py(img,img_mono,img_arr):
                     index+=1
 
             g= math.sqrt(gx ** 2 + gy ** 2)
-            sobel_filtered_image[i-1][j-1] = g
-            media = media+sobel_filtered_image[i - 1, j - 1]
+            sobel_filtered_image[i+1][j+1] = g
+            media = media+g
     
     media = media/(82*46)
 
@@ -44,14 +42,14 @@ def Sobel_py(img,img_mono,img_arr):
         for j in range(0, 84): #Ancho
             if sobel_filtered_image[i][j] < media:    #Si el pixel es menor al umbral, se guarda 0 en el arreglo dado que es de fondo (pixel no prendido en pantalla)
                 img_mono[i][j]=0
-                sobel_filtered_image[i][j]=255
+                img[i][j]=255
             else:   
-                sobel_filtered_image[i][j]=0
+                img[i][j]=0
     
     #Array para NokiaLCD
     img_arr=NokiaLCD_array(img_mono, img_arr)
 
-    return sobel_filtered_image, img_arr
+    return img, img_arr
 
 #FILTRO UMBRAL INTENSIDAD GLOBAL
 def Int_thresh_py(img,img_mono,img_arr):
@@ -110,10 +108,10 @@ if __name__ == '__main__':
     #SOBEL FILTER
     img_sobel = grayscale(img)
     Sobel_arr = np.zeros((504),dtype='uint8')   #Imagen en arreglo hexadecimal
-    Sobel_mono = np.ones((48, 84),dtype='uint8') #Imagen en forma 0 y 1 volteada 
+    Sobel_mono = np.zeros((48, 84),dtype='uint8') #Imagen en forma 0 y 1 volteada 
     img_sobel, Sobel_arr = Sobel_py(img_sobel,Sobel_mono,Sobel_arr)
 
-    exportar_arr(Sobel_arr, "Sobel_prueba1_py.txt")
+    #exportar_arr(Sobel_arr, "Sobel_prueba1_py.txt")
 
     #GLOBAL INTENSITY THRESHOLD FILTER
     img_ithresh = grayscale(img)
@@ -121,7 +119,7 @@ if __name__ == '__main__':
     Ithresh_mono = np.ones((48, 84),dtype='uint8') #Imagen en forma 0 y 1 volteada 
     img_ithresh, Ithresh_arr = Int_thresh_py(img_ithresh,Ithresh_mono,Ithresh_arr)
 
-    exportar_arr(Ithresh_arr, "ITresh_prueba1.txt")
+    #exportar_arr(Ithresh_arr, "ITresh_prueba1.txt")
 
-    cv.imwrite('Results/Grayscale_py.png',img_ithresh)
-    cv.imwrite('Results/Sobel_pu.png',img_sobel)
+    #cv.imwrite('Results/Grayscale_py.png',img_ithresh)
+    cv.imwrite('Results/Sobel_py.png',img_sobel)
