@@ -6,8 +6,8 @@
 
 extern void mono_img_asm(unsigned char *img, unsigned char *img_ithresh, double weight_b, double weight_g, double weight_r);
 extern void mono_array_asm(unsigned char *img_mono, unsigned char *mono_array);
+extern void sobel_asm(unsigned char *img, unsigned char *sobel_img, unsigned char *sobel_arr, double *sobel_filtered_image, double weight_b, double weight_g, double weight_r);
 
-// Filtro a escala de grises
 float grayscale(unsigned char *img,unsigned char *img_grayscale){
     int promedio;
     int index, i , j;
@@ -91,7 +91,7 @@ void Sobel_c(unsigned char *img, unsigned char *sobel_img, unsigned char *sobel_
                 }
             }
             g = sqrt(gx*gx+gy*gy);
-            sobel_filtered_image[i*84+j+85]=g; //index-> [(i+1)*84+j+1]
+            sobel_filtered_image[i*84+j]=g; //index-> [(i+1)*84+j+1]
             media+=g;
         }
     }
@@ -107,8 +107,8 @@ void Sobel_c(unsigned char *img, unsigned char *sobel_img, unsigned char *sobel_
                 sobel_img[i*84+j]=255;
                 img_mono[i][j]=0;
             }else{
-                img_mono[i][j]=1;
                 sobel_img[i*84+j]=0;
+                img_mono[i][j]=1;
             }
         }
     }
