@@ -18,9 +18,14 @@ mono_array_asm:
     mov r15, rdi ;img[0][0]
 for_alto48:
     mov r11, 0
+    mov rdi, r15 ;img[j+8][0]  
+    add r15, 672 ;84*8
 
     mov r14, rdi ;copy latest img[i][0]
 for_ancho84:
+    mov rdi, r14 ;img[i][j=j+1] 
+    inc r14
+  
     mov r8, 0
 
     ;Binary to Decimal - 8bits vertically
@@ -74,17 +79,12 @@ for_ancho84:
 
 cont_ancho84:
     inc rsi ;Byte_index++
-    inc r14
-    mov rdi, r14 ;img[i][j=j+1]
 
     inc r11
     cmp r11, 84
     jl for_ancho84
 
 cont_alto48:
-    add r15, 672 ;84*8
-    mov rdi, r15 ;img[j+8][0]  
-    
     add r10, 8
     cmp r10, 48
     jl for_alto48

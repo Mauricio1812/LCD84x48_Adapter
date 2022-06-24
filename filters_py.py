@@ -8,7 +8,7 @@ def NokiaLCD_array(img_mono, img_arr):
     Byte_index = 0
     for i in range(0, 48, 8): #Alto
         for j in range(0, 84): #Ancho
-            #Transformando a bloques de 8bits - forma: valor*2^(n-1)
+            #Transformando a bloques de 8bits - forma: valor*2^(n)
             for n in range(8):
                 img_arr[Byte_index]=img_arr[Byte_index]+img_mono[i+n][j]*pow(2,n)
             #Cuando se cumple 8bits, se pasa al siguiente bloque
@@ -32,7 +32,7 @@ def Sobel_py(img,img_mono,img_arr,sobel_filtered_image):
                     index+=1
 
             g= math.sqrt(gx ** 2 + gy ** 2)
-            sobel_filtered_image[i+1][j+1] = g
+            sobel_filtered_image[i][j] = g
             media = media+g
     
     media = media/(82*46)

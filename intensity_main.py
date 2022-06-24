@@ -17,7 +17,7 @@ if __name__ == '__main__':
 
     #GLOBAL INTENSITY THRESHOLD ASM
     imgASM = cv.resize(img,(84,48), interpolation=cv.INTER_CUBIC)
-    Ithresh_arrASM = np.zeros((504),dtype='uint8')   #Imagen en arreglo hexadecimal
+    Ithresh_arrASM = np.zeros((505),dtype='uint8')   #Imagen en arreglo hexadecimal
     Ithresh_monoASM = np.zeros((48, 84),dtype='uint8') #Imagen en forma 0 y 1      
     lib.mono_img_asm(imgASM, Ithresh_monoASM, 0.0722, 0.7152, 0.2126)
     lib.mono_array_asm(Ithresh_monoASM,Ithresh_arrASM)
@@ -25,9 +25,13 @@ if __name__ == '__main__':
     # Para ver la imgn en blanco y negro cambiar  mono_img_asm:
     #   -En white_pixel -> mov r8, 255
     #   -En black_pixel -> mov r8,0
+
+    Ithresh_arrASM=np.delete(Ithresh_arrASM, 504, 0)
     fpy.exportar_arr(Ithresh_arrASM, "Arrays/Intensity_ASM.txt")
 
+    #Resizing
     img = cv.resize(img,(84,48), interpolation=cv.INTER_CUBIC)
+
     #GLOBAL INTENSITY THRESHOLD C
     Ithresh_arrC1 = np.zeros((504),dtype='uint8')   #Imagen en arreglo hexadecimal
     Ithresh_monoC1 = np.ones((48, 84),dtype='uint8') #Imagen en forma 0 y 1      
@@ -35,7 +39,7 @@ if __name__ == '__main__':
     cv.imwrite('Results/Intensity_C.png',Ithresh_monoC1)
     fpy.exportar_arr(Ithresh_arrC1, "Arrays/Intensity_C.txt")  
 
-    #GLOBAL INTENSITY THRESHOLD FILTER
+    #GLOBAL INTENSITY THRESHOLD FILTER PYTHON
     img_ithresh = fpy.grayscale(img)
     Ithresh_arr = np.zeros((504),dtype='uint8')   #Imagen en arreglo hexadecimal
     Ithresh_mono = np.ones((48, 84),dtype='uint8') #Imagen en forma 0 y 1  
