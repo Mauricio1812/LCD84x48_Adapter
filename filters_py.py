@@ -89,7 +89,7 @@ def grayscale(img):
 def exportar_arr(img_arr,file_name):
     #Escribiendo el arreglo en un archivo de texto
     file = open(file_name, "w+")
-    file.write("char array_py[504] = {")
+    file.write("char bitmapArray[504] = {")
     for i in range(len(img_arr)-1):
         content = hex(img_arr[i])
         file.write(content)
