@@ -23,8 +23,8 @@ if __name__ == '__main__':
     lib.mono_array_asm.argtypes = [np.ctypeslib.ndpointer(dtype=np.ubyte, ndim=2), np.ctypeslib.ndpointer(dtype=np.ubyte)]
 
     #Reading and resizing selected image
-    img = cv.imread('Photos/MarioBros.png') 
-    img = cv.resize(img,(84,48), interpolation=cv.INTER_CUBIC)
+    img_read = cv.imread('Photos/MarioBros.png') 
+    img = fpy.resizing_interpolacion_bilineal(img_read, 48, 84)
 
 #---------------------------------------------------------------------------------------------------#      
 #------------------------------------------VARIABLES------------------------------------------------#      
@@ -76,7 +76,7 @@ if __name__ == '__main__':
 
     #Sobel Python
     img_sobelPy = fpy.grayscale(img)
-    img_sobel, Sobel_arr = fpy.Sobel_py(img_sobelPy,Sobel_monoPy,Sobel_arrPy,sobel_filtered_imagePy)
+    img_sobelPy, Sobel_arr = fpy.Sobel_py(img_sobelPy,Sobel_monoPy,Sobel_arrPy,sobel_filtered_imagePy)
     cv.imwrite('Results/Sobela_py.png',img_sobelPy)    
     fpy.exportar_arr(Sobel_arr, "Arrays/Sobel_py.txt")
 
