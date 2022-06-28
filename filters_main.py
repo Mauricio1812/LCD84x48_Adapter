@@ -60,7 +60,7 @@ if __name__ == '__main__':
 #---------------------------------------------------------------------------------------------------#        
 
     #Sobel ASM
-    lib.sobel_asm(img, Sobel_monoASM,Sobel_arrASM,sobel_filtered_imageASM, 0.0722, 0.7152, 0.2126)
+    lib.sobel_asm(img, Sobel_monoASM,Sobel_arrASM,sobel_filtered_imageASM, 0.114, 0.587, 0.299)
     lib.mono_array_asm(Sobel_monoASM,Sobel_arrASM)
     cv.imwrite('Results/Sobel_ASM.png',Sobel_monoASM)
     Sobel_arrASM=np.delete(Sobel_arrASM, 504, 0)
@@ -85,7 +85,7 @@ if __name__ == '__main__':
 #---------------------------------------------------------------------------------------------------#      
 
     #GLOBAL INTENSITY THRESHOLD ASM  
-    lib.mono_img_asm(img, Ithresh_monoASM, 0.0722, 0.7152, 0.2126)
+    lib.mono_img_asm(img, Ithresh_monoASM, 0.114, 0.587, 0.299)
     lib.mono_array_asm(Ithresh_monoASM,Ithresh_arrASM)
     cv.imwrite('Results/Intensity_ASM.png',Ithresh_monoASM) 
     Ithresh_arrASM=np.delete(Ithresh_arrASM, 503, 0)

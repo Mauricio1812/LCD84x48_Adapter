@@ -16,7 +16,7 @@ float grayscale(unsigned char *img,unsigned char *img_grayscale){
         for(j=0;j<84;j++){ //Ancho
             index=i*84*3+j*3;
             //Valor promedio pesado
-            promedio=0.0722* img[index]+ 0.7152* img[index+1] + 0.2126* img[index+2];           
+            promedio=0.114* img[index]+ 0.587* img[index+1] + 0.299* img[index+2];              
             index=i*84+j;
             //Asignando valor a img grayscale
             img_grayscale[index]=promedio;
