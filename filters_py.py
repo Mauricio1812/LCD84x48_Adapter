@@ -83,7 +83,7 @@ def grayscale(img):
     for i in range (len(img)):
         for j in range(len(img[0])):
             # Gray = 0.0722Blue + 0.7152Green + 0.2126Red
-            gray[i][j]=int(0.114*img[i][j][0]+0.587*img[i][j][1]+0.299*img[i][j][2])
+            gray[i][j]=int(0.0722*img[i][j][0]+0.7152*img[i][j][1]+0.2126*img[i][j][2])
     return gray
 
 def exportar_arr(img_arr,file_name):
