@@ -70,16 +70,17 @@ if __name__ == '__main__':
 #--------------------------------------SOBEL FILTER-------------------------------------------------#        
 #---------------------------------------------------------------------------------------------------#        
 
-    for i in range(100): #Repitiendo 50 veces para sacar los tiempos medios
+    for i in range(100): #Repitiendo 100 veces para sacar los tiempos medios
         #Sobel ASM
         inicio = time.perf_counter()
         lib.sobel_asm(img, Sobel_monoASM,Sobel_arrASM,sobel_filtered_imageASM,  0.0722, 0.7152, 0.2126)
-        lib.mono_array_asm(Sobel_monoASM,Sobel_arrASM)
-        fin = time.perf_counter()
-        tsobel_asm.append(fin-inicio)
         # Para ver la imgn en blanco y negro cambiar  mono_img_asm:
         #   -En white_pixel -> mov r8, 255
         #   -En black_pixel -> mov r8,0
+        # Al hacer esto, comentar la linea siguiente lib.mono_array_asm dado que trabaja con solo 0 y 1
+        lib.mono_array_asm(Sobel_monoASM,Sobel_arrASM)
+        fin = time.perf_counter()
+        tsobel_asm.append(fin-inicio)
         #Sobel C
         inicio = time.perf_counter()
         lib.Sobel_c(img, Sobel_monoC,Sobel_arrC,sobel_filtered_imageC)
@@ -107,16 +108,17 @@ if __name__ == '__main__':
 #---------------------------------------------------------------------------------------------------#      
 #--------------------------------INTENSITY THRESHOLD------------------------------------------------#      
 #---------------------------------------------------------------------------------------------------#      
-    for i in range(100): #Repitiendo 50 veces para sacar los tiempos medios
+    for i in range(100): #Repitiendo 100 veces para sacar los tiempos medios
         #GLOBAL INTENSITY THRESHOLD ASM  
         inicio = time.perf_counter()
         lib.mono_img_asm(img, Ithresh_monoASM,  0.0722, 0.7152, 0.2126)
-        lib.mono_array_asm(Ithresh_monoASM,Ithresh_arrASM)
-        fin = time.perf_counter()
-        tintensity_asm.append(fin-inicio)
         # Para ver la imgn en blanco y negro cambiar  mono_img_asm:
         #   -En white_pixel -> mov r8, 255
         #   -En black_pixel -> mov r8,0
+        # Al hacer esto, comentar la linea siguiente lib.mono_array_asm dado que trabaja con solo 0 y 1
+        lib.mono_array_asm(Ithresh_monoASM,Ithresh_arrASM)
+        fin = time.perf_counter()
+        tintensity_asm.append(fin-inicio)
 
         #GLOBAL INTENSITY THRESHOLD C   
         inicio = time.perf_counter()
