@@ -4,6 +4,9 @@ Programa para adaptar una imagen de tamaño cualquiera a un formato compatible c
 
 ## Uso
 
-Para correr el programa, ejecutar el archivo bash exec.sh que ejecutará las funciones en asm, C y la función filters_main.py enlazando todo. Las funciones intensity_main.py y sobel_main.py sirven para ejectuar únicamente los métodos respectivos por separado. Por otro lado, se adjunta la versión convertida en Jupyter Notebook para pruebas rápidas. 
+Para correr el programa, ejecutar el archivo bash exec.sh que ejecutará las funciones en asm, C y la función filters_main.py enlazando todo. Se leera un archivo dentro de la carpeta Photos, y el resultado se guardará como PNG en Results y en formato array para LCD en Arrays.
 
 Finalmente, para pasarlo a una pantalla Nokia LCD 5110 subir el código en display_img a un Arduino reemplazando el bitmapArray[504] por los arreglos que se desean visualizar. 
+
+## Archivos adicionales
+Las funciones intensity_main.py y sobel_main.py sirven para ejectuar únicamente los métodos respectivos por separado. Por otro lado, se adjunta la versión convertida en Jupyter Notebook para pruebas rápidas. 
