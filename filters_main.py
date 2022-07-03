@@ -74,7 +74,7 @@ if __name__ == '__main__':
         #Sobel ASM
         inicio = time.perf_counter()
         lib.sobel_asm(img, Sobel_monoASM,Sobel_arrASM,sobel_filtered_imageASM,  0.0722, 0.7152, 0.2126)
-        # Para ver la imgn en blanco y negro cambiar  mono_img_asm:
+        # Para ver la imgn en blanco y negro cambiar  sobel_asm:
         #   -En white_pixel -> mov r8, 255
         #   -En black_pixel -> mov r8,0
         # Al hacer esto, comentar la linea siguiente lib.mono_array_asm dado que trabaja con solo 0 y 1
