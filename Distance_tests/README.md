@@ -1,0 +1,1 @@
+Imágenes usadas para testear en DeepAI (https://deepai.org/machine-learning-model/image-similarity) la semejanza obtenida con los resultados. Se tomó como referencia la imagen resized, comparandola con la obtenida mediante ambos métodos.
