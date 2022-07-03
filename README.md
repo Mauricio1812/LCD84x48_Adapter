@@ -9,4 +9,4 @@ Para correr el programa, ejecutar el archivo bash exec.sh que ejecutará las fun
 Finalmente, para pasarlo a una pantalla Nokia LCD 5110 subir el código en display_img a un Arduino reemplazando el bitmapArray[504] por los arreglos que se desean visualizar. 
 
 ## Archivos adicionales
-Las funciones intensity_main.py y sobel_main.py sirven para ejectuar únicamente los métodos respectivos por separado. Por otro lado, se adjunta la versión convertida en Jupyter Notebook para pruebas rápidas. 
+Las funciones intensity_main.py y sobel_main.py sirven para ejectuar únicamente los métodos respectivos por separado. También se incluye el archivo filters_main_tests.py que describe los tests de tiempos medios aplicados para comparar la rapidez de cada método y speedups. Por otro lado, se adjunta la versión convertida en Jupyter Notebook para pruebas rápidas. 
