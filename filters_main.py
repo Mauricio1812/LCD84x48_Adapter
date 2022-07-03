@@ -23,7 +23,7 @@ if __name__ == '__main__':
     lib.mono_array_asm.argtypes = [np.ctypeslib.ndpointer(dtype=np.ubyte, ndim=2), np.ctypeslib.ndpointer(dtype=np.ubyte)]
 
     #Reading and resizing selected image
-    img_read = cv.imread('Photos/Pikachu.png') 
+    img_read = cv.imread('Photos/MarioBros.png') 
     img = fpy.resizing_interpolacion_bilineal(img_read, 48, 84)
     cv.imwrite('Results/Resized.png',img)
 
